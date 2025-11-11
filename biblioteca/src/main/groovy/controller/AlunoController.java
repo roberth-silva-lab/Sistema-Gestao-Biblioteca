@@ -1,6 +1,7 @@
 package controller;
 
 import model.AlunoModel;
+import model.EmprestimoModel;
 import repository.AlunoRepository;
 import repository.EmprestimoRepository;
 
@@ -60,17 +61,39 @@ public class AlunoController {
             System.err.println("Erro: ID do aluno não pode ser nulo para exclusão.");
             return false;
         }
+
         try {
+            AlunoModel aluno = alunoRepository.buscarPorId(id);
+            if (aluno == null) {
+                System.err.println("Erro: Aluno com ID " + id + " não encontrado.");
+                return false;
+            }
+
+            List<EmprestimoModel> emprestimosAtivos = emprestimoRepository.buscarAtivosPorAluno(aluno);
+            if (emprestimosAtivos != null && !emprestimosAtivos.isEmpty()) {
+                System.err.println("Erro: Não é possível excluir. Aluno possui " + emprestimosAtivos.size() + " empréstimo(s) ativo(s).");
+                return false; // BLOQUEIA se tiver pendências
+            }
+
+
+            List<EmprestimoModel> historicoEmprestimos = emprestimoRepository.buscarTodosPorAluno(aluno);
+            if (historicoEmprestimos != null) {
+                for (EmprestimoModel emprestimoAntigo : historicoEmprestimos) {
+
+                    emprestimoRepository.excluir(emprestimoAntigo.getId());
+                }
+            }
 
             alunoRepository.excluir(id);
-            return true;
+            return true; // SUCESSO!
+
         } catch (Exception e) {
-            System.err.println("Erro ao excluir aluno: " + e.getMessage());
+
+            System.err.println("Erro ao excluir aluno (possível falha ao limpar histórico): " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
-
 
     public AlunoModel buscarAlunoPorId(Long id) {
         return alunoRepository.buscarPorId(id);

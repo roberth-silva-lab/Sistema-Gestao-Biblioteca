@@ -111,15 +111,20 @@ public class CadastrarAluno {
                 nome, sexo, celularComMascara, email
         );
 
-        int resposta = JOptionPane.showConfirmDialog(
+        Object[] opcoes = {"Sim, salvar", "Não, cancelar"};
+
+        int resposta = JOptionPane.showOptionDialog(
                 PainelAluno,
                 mensagemConfirmacao,
                 "Confirmar Cadastro",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[1]
         );
 
-        if (resposta == JOptionPane.YES_OPTION) {
+        if (resposta == 0) {
             boolean sucesso = alunoController.salvarAluno(id, nome, sexo, celularSemMascara, email);
 
             if (sucesso) {

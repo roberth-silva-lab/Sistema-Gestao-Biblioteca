@@ -45,9 +45,18 @@ public class Principal extends JFrame {
         menuOperacoes.addSeparator();
         menuOperacoes.add(listarEmprestados);
 
+        JMenu menuExclusao = new JMenu("Exclusão");
+        JMenuItem apagarAluno= new JMenuItem("Apagar Aluno");
+        JMenuItem apagarLivro=new JMenuItem("Apagar Livro");
+        menuExclusao.add(apagarAluno);
+        menuExclusao.add(apagarLivro);
+
+
 
         jmenuBar.add(menuCadastros);
         jmenuBar.add(menuOperacoes);
+        jmenuBar.add(menuExclusao);
+
 
 
         cadastrarLivro.addActionListener(new ActionListener() {
@@ -122,8 +131,33 @@ public class Principal extends JFrame {
 
         });
 
+        apagarAluno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ApagarAluno telaApagarAluno = new ApagarAluno();
+                JFrame frameApagarAluno = new JFrame("Apagar Alunos");
 
+                frameApagarAluno.setContentPane(telaApagarAluno.getPanel());
+                frameApagarAluno.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frameApagarAluno.setSize(800, 600);
+                frameApagarAluno.setLocationRelativeTo(null);
+                frameApagarAluno.setVisible(true);
+            }
+        });
 
+        apagarLivro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ApagarLivro telaApagarLivro = new ApagarLivro();
+                JFrame frameApagarLivro = new JFrame("Apagar Livros");
+
+                frameApagarLivro.setContentPane(telaApagarLivro.getPanel());
+                frameApagarLivro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frameApagarLivro.setSize(800, 600);
+                frameApagarLivro.setLocationRelativeTo(null);
+                frameApagarLivro.setVisible(true);
+            }
+        });
 
     }
 }

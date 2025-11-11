@@ -126,15 +126,21 @@ public class CadastrarLivro {
                 titulo, autor, tema, isbn, dataStr, qtdDisponivel
         );
 
-        int resposta = JOptionPane.showConfirmDialog(
+        Object[] opcoes={"Sim,Salvar","Não,Cancelar"};
+
+
+        int resposta = JOptionPane.showOptionDialog(
                 PainelCadastro,
                 mensagemConfirmacao,
                 "Confirmar Cadastro",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[1]
         );
 
-        if (resposta == JOptionPane.YES_OPTION) {
+        if (resposta == 0) {
             boolean sucesso = livroController.salvarLivro(id, titulo, tema, autor, isbn, dataPublicacao, qtdDisponivel);
 
             if (sucesso) {

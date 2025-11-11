@@ -20,7 +20,7 @@ public class LivroController {
 
 
     public boolean salvarLivro(Long id, String titulo, String tema, String autor, String isbn, LocalDate dataPublicacao, int qtdDisponivel) {
-
+        // ... (Seu método salvar está correto, sem mudanças) ...
 
         if (titulo == null || titulo.trim().isEmpty()) {
             System.err.println("Erro: O título não pode estar vazio.");
@@ -74,32 +74,37 @@ public class LivroController {
         }
     }
 
-
     public boolean excluirLivro(Long id) {
         if (id == null) {
             System.err.println("Erro: ID do livro não pode ser nulo para exclusão.");
             return false;
         }
 
-
-        LivroModel livro = livroRepository.buscarPorId(id);
-        if (livro == null) {
-            System.err.println("Erro: Livro não encontrado para exclusão.");
-            return false;
-        }
-
-        List<EmprestimoModel> emprestimosAtivos = emprestimoRepository.buscarAtivosPorLivro(livro);
-        if (emprestimosAtivos != null && !emprestimosAtivos.isEmpty()) {
-            System.err.println("Erro: Não é possível excluir o livro. Ele possui " + emprestimosAtivos.size() + " empréstimo(s) ativo(s).");
-            return false;
-        }
-
-
         try {
+            LivroModel livro = livroRepository.buscarPorId(id);
+            if (livro == null) {
+                System.err.println("Erro: Livro não encontrado para exclusão.");
+                return false;
+            }
+
+
+            List<EmprestimoModel> emprestimosAtivos = emprestimoRepository.buscarAtivosPorLivro(livro);
+            if (emprestimosAtivos != null && !emprestimosAtivos.isEmpty()) {
+                System.err.println("Erro: Não é possível excluir o livro. Ele possui " + emprestimosAtivos.size() + " empréstimo(s) ativo(s).");
+                return false;
+            }
+
+            List<EmprestimoModel> historicoEmprestimos = emprestimoRepository.buscarTodosPorLivro(livro);
+            if (historicoEmprestimos != null) {
+                for (EmprestimoModel emprestimoAntigo : historicoEmprestimos) {
+                    emprestimoRepository.excluir(emprestimoAntigo.getId());
+                }
+            }
             livroRepository.excluir(id);
             return true;
+
         } catch (Exception e) {
-            System.err.println("Erro ao excluir livro: " + e.getMessage());
+            System.err.println("Erro ao excluir livro (possível falha ao limpar histórico): " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -117,10 +122,10 @@ public class LivroController {
         return livroRepository.listarDisponiveis();
     }
 
+
     public List<LivroModel> buscarLivrosPorTitulo(String titulo) {
         if (titulo == null || titulo.trim().isEmpty()) {
-
-            return livroRepository.listarDisponiveis();
+            return livroRepository.listarTodos();
         }
         return livroRepository.buscarPorTitulo(titulo);
     }

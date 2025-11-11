@@ -43,6 +43,9 @@ public class EmprestarLivro {
 
         configurarTabelas();
 
+        buscarAlunos();
+        buscarLivros();
+
         textBuscarAluno.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e){
