@@ -72,4 +72,5 @@ O sistema permite que o aluno devolva os livros, atualizando o registro de empr�
 - [x] **Registrar Devolução:** Implementação da lógica de devolução.
 - [x] **Listagens e Relatórios:** Telas para listar livros disponíveis e empréstimos ativos.
 - [x] **Cálculo de Multas:** Recurso para calcular multas (atraso/avaria) no momento da devolução.
+- [x] **Relatório Histórico de Aluno:** Tela para gerar o histórico completo de um aluno (ativos, devolvidos, atrasos e avarias)
 - [x] **UI/UX:** Tradução dos botões de confirmação (`JOptionPane`) para Português, melhorando a experiência do usuário.
