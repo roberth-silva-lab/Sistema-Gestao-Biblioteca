@@ -129,8 +129,8 @@ public class EmprestimoRepository {
         EntityManager em = Conexao.getEntityManagerFactory().createEntityManager();
         List<EmprestimoModel> emprestimos = null;
         try {
+            String jpql = "SELECT e FROM EmprestimoModel e JOIN FETCH e.aluno a JOIN FETCH e.livro l WHERE e.aluno = :aluno";
 
-            String jpql = "SELECT e FROM EmprestimoModel e WHERE e.aluno = :aluno";
             TypedQuery<EmprestimoModel> query = em.createQuery(jpql, EmprestimoModel.class);
             query.setParameter("aluno", aluno);
             emprestimos = query.getResultList();

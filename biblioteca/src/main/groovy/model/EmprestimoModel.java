@@ -3,6 +3,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+
 @Entity
 @Table(name="emprestimos")
 
@@ -27,6 +28,9 @@ public class EmprestimoModel implements Serializable {
 
     @Column(name="data_devolucao_real")
     private LocalDate dataDevolucaoReal;
+
+    @Column(name = "com_avaria")
+    private boolean comAvaria = false;
 
     public EmprestimoModel() {}
 
@@ -78,7 +82,12 @@ public class EmprestimoModel implements Serializable {
         this.dataDevolucaoReal = dataDevolucaoReal;
     }
 
-    public boolean isAtrasado(){
-        return dataDevolucaoReal == null && LocalDate.now().isAfter(dataDevolucaoPrevista);
+    public boolean isComAvaria() {
+        return comAvaria;
+    }
+
+    public void setComAvaria(boolean comAvaria) {
+        this.comAvaria = comAvaria;
     }
 }
+

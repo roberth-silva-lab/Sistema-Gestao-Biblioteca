@@ -70,11 +70,6 @@ public class EmprestimoController {
         }
     }
 
-    public String registrarDevolucao(EmprestimoModel emprestimo) {
-        return registrarDevolucao(emprestimo, false);
-    }
-
-
     public String registrarDevolucao(EmprestimoModel emprestimo, boolean comAvarias) {
         if (emprestimo == null) {
             return "Erro: Nenhum empréstimo selecionado.";
@@ -92,7 +87,7 @@ public class EmprestimoController {
             }
             double multaTotal = multaAtraso + multaAvaria;
 
-
+            emprestimo.setComAvaria(comAvarias);
             emprestimo.setDataDevolucaoReal(LocalDate.now());
             emprestimoRepository.salvar(emprestimo);
 
@@ -123,7 +118,6 @@ public class EmprestimoController {
 
         } catch (Exception e) {
             try {
-                // Tenta reverter a devolução
                 emprestimo.setDataDevolucaoReal(null);
                 emprestimoRepository.salvar(emprestimo);
             } catch (Exception eRevert) {
@@ -156,7 +150,4 @@ public class EmprestimoController {
         }
     }
 
-    public List<EmprestimoModel> listarEmprestimosAtrasados() {
-        return emprestimoRepository.listarAtrasados();
-    }
 }

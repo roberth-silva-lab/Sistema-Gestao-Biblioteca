@@ -51,11 +51,16 @@ public class Principal extends JFrame {
         menuExclusao.add(apagarAluno);
         menuExclusao.add(apagarLivro);
 
+        JMenu menuRelatorio= new JMenu("Relatorio");
+        JMenuItem relatorioAluno= new JMenuItem("Relatorio Aluno");
+        menuRelatorio.add(relatorioAluno);
+
 
 
         jmenuBar.add(menuCadastros);
         jmenuBar.add(menuOperacoes);
         jmenuBar.add(menuExclusao);
+        jmenuBar.add(menuRelatorio);
 
 
 
@@ -157,6 +162,20 @@ public class Principal extends JFrame {
                 frameApagarLivro.setLocationRelativeTo(null);
                 frameApagarLivro.setVisible(true);
             }
+        });
+
+        relatorioAluno.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               RelatorioAluno telaRelatorioAluno = new RelatorioAluno();
+               JFrame frameRelatorioAluno = new JFrame("Relatorio de Alunos");
+
+               frameRelatorioAluno.setContentPane(telaRelatorioAluno.getPanel());
+               frameRelatorioAluno.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+               frameRelatorioAluno.setSize(800, 600);
+               frameRelatorioAluno.setLocationRelativeTo(null);
+               frameRelatorioAluno.setVisible(true);
+           }
         });
 
     }

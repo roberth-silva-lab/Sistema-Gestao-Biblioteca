@@ -114,10 +114,6 @@ public class LivroController {
         return livroRepository.buscarPorId(id);
     }
 
-    public List<LivroModel> listarTodosLivros() {
-        return livroRepository.listarTodos();
-    }
-
     public List<LivroModel> listarLivrosDisponiveis() {
         return livroRepository.listarDisponiveis();
     }

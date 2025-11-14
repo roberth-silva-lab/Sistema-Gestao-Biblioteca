@@ -111,21 +111,26 @@ public class RegistrarDevolucao {
         }
     }
 
-
     private void registrarDevolucao() {
         if (emprestimoSelecionado == null) {
             JOptionPane.showMessageDialog(PanelDevolucao, "Por favor, selecione um empréstimo da lista para devolver.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        Object[] opcoes={"Sim(Danificado)","Não (Perfeito)"};
 
-        int avariaResult = JOptionPane.showConfirmDialog(
+        int avariaResult = JOptionPane.showOptionDialog(
                 PanelDevolucao,
                 "O livro está sendo devolvido com avarias (danificado)?",
                 "Verificação de Avarias",
-                JOptionPane.YES_NO_OPTION
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[1]
+
         );
-        boolean comAvarias = (avariaResult == JOptionPane.YES_OPTION);
+        boolean comAvarias = (avariaResult == 0);
 
 
         String resultado = emprestimoController.registrarDevolucao(emprestimoSelecionado, comAvarias);

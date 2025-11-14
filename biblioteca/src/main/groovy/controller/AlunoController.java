@@ -110,14 +110,12 @@ public class AlunoController {
         }
         return alunoRepository.buscarPorNome(nome);
     }
-    public boolean verificarLimiteDeEmprestimos(AlunoModel aluno) {
-        if (aluno == null || aluno.getId() == null) {
-            return false;
+
+    public List<EmprestimoModel> getHistoricoCompleto(AlunoModel aluno) {
+        if(aluno == null) {
+            return new java.util.ArrayList<>();
         }
 
-        int emprestimosAtivos = emprestimoRepository.buscarAtivosPorAluno(aluno).size();
-
-
-        return emprestimosAtivos < 5;
+        return emprestimoRepository.buscarTodosPorAluno(aluno);
     }
 }
