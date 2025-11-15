@@ -72,7 +72,7 @@ public class AlunoController {
             List<EmprestimoModel> emprestimosAtivos = emprestimoRepository.buscarAtivosPorAluno(aluno);
             if (emprestimosAtivos != null && !emprestimosAtivos.isEmpty()) {
                 System.err.println("Erro: Não é possível excluir. Aluno possui " + emprestimosAtivos.size() + " empréstimo(s) ativo(s).");
-                return false; // BLOQUEIA se tiver pendências
+                return false; 
             }
 
 
@@ -85,7 +85,7 @@ public class AlunoController {
             }
 
             alunoRepository.excluir(id);
-            return true; // SUCESSO!
+            return true; 
 
         } catch (Exception e) {
 
