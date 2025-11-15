@@ -20,8 +20,6 @@ public class LivroController {
 
 
     public boolean salvarLivro(Long id, String titulo, String tema, String autor, String isbn, LocalDate dataPublicacao, int qtdDisponivel) {
-        // ... (Seu método salvar está correto, sem mudanças) ...
-
         if (titulo == null || titulo.trim().isEmpty()) {
             System.err.println("Erro: O título não pode estar vazio.");
             return false;
